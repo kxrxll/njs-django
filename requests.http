@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:8000/
+
+# get all products
+GET {{baseUrl}}/products/
+Content-Type: application/json
+
+###
+
+# create product
+POST {{baseUrl}}/products/
+Content-Type: application/json
+
+{
+  "name": "Товар",
+  "description": "Этот товар очень хорош!",
+  "link": "https://images.musicstore.de/images/0960/gibson-les-paul-standard-50s-heritage-cherry-sunburst_1_GIT0049490-000.jpg"
+}
