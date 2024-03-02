@@ -1,25 +1,29 @@
 "use client";
 
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import axios from "axios";
+import { addNewProduct } from "../../redux/productsSlice";
 
 export default function ProductForm() {
+  const dispatch = useDispatch();
   const router = useRouter();
   async function fetchProduct(event) {
     event.preventDefault();
     const form = event.currentTarget.elements;
-    await axios.post("http://localhost:8000/products/", {
-      name: form.name.value,
-      link: form.link.value,
-      description: form.description.value,
-    });
+    await dispatch(
+      addNewProduct({
+        name: form.name.value,
+        link: form.link.value,
+        description: form.description.value,
+      })
+    ).unwrap();
     router.push("/");
   }
 
   return (
     <form className="" onSubmit={fetchProduct}>
-      <div className="space-y-12">
+      <div className="space-y-12 container md:container md:mx-auto">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Submit the new product
@@ -90,14 +94,20 @@ export default function ProductForm() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <Link
+            href="/"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Back
+          </Link>
+          <button
+            type="submit"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </form>
   );
