@@ -16,7 +16,9 @@ const productsSlice = createSlice({
       })
       .addCase(addNewProduct.fulfilled, (state, action) => {
         state.status = "idle";
-        state.products.push(action.payload);
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.status = "idle";
       });
   },
 });
@@ -24,6 +26,14 @@ const productsSlice = createSlice({
 export const selectProducts = (state) => state.products.products;
 
 export default productsSlice.reducer;
+
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async () => {
+    const response = await axios("http://localhost:8000/products/");
+    return response.data;
+  }
+);
 
 export const addNewProduct = createAsyncThunk(
   "products/addNewProduct",
@@ -36,10 +46,15 @@ export const addNewProduct = createAsyncThunk(
   }
 );
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async () => {
-    const response = await axios("http://localhost:8000/products/");
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProduct",
+  async (id) => {
+    const response = await axios.delete("http://localhost:8000/products/", {
+      data: id,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   }
 );

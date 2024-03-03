@@ -23,7 +23,7 @@ export default function ProductForm() {
 
   return (
     <form className="" onSubmit={fetchProduct}>
-      <div className="space-y-12 container md:container md:mx-auto">
+      <div className="space-y-12 container md:container md:mx-auto p-20">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Submit the new product
